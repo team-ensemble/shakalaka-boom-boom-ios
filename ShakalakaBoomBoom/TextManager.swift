@@ -26,7 +26,7 @@ class TextManager {
 		messageHideTimer?.invalidate()
 		
 		// set text
-		viewController.messageLabel.text = text
+//        viewController.messageLabel.text = text
 		
 		// make sure status is showing
 		showHideMessage(hide: false, animated: true)
@@ -56,7 +56,7 @@ class TextManager {
 		debugMessageHideTimer?.invalidate()
 		
 		// set text
-		viewController.debugMessageLabel.text = message
+//        viewController.debugMessageLabel.text = message
 		
 		// make sure debug message is showing
 		showHideDebugMessage(hide: false, animated: true)
@@ -231,7 +231,7 @@ class TextManager {
 	
 	private func showHideMessage(hide: Bool, animated: Bool) {
 		if !animated {
-			viewController.messageLabel.isHidden = hide
+//            viewController.messageLabel.isHidden = hide
 			return
 		}
 		
@@ -239,14 +239,14 @@ class TextManager {
 		               delay: 0,
 		               options: [.allowUserInteraction, .beginFromCurrentState],
 		               animations: {
-						self.viewController.messageLabel.isHidden = hide
+//                        self.viewController.messageLabel.isHidden = hide
 						self.updateMessagePanelVisibility()
 		}, completion: nil)
 	}
 	
 	private func showHideDebugMessage(hide: Bool, animated: Bool) {
 		if !animated {
-			viewController.debugMessageLabel.isHidden = hide
+//            viewController.debugMessageLabel.isHidden = hide
 			return
 		}
 		
@@ -254,15 +254,15 @@ class TextManager {
 		               delay: 0,
 		               options: [.allowUserInteraction, .beginFromCurrentState],
 		               animations: {
-						self.viewController.debugMessageLabel.isHidden = hide
+//                        self.viewController.debugMessageLabel.isHidden = hide
 						self.updateMessagePanelVisibility()
 		}, completion: nil)
 	}
 	
 	private func updateMessagePanelVisibility() {
 		// Show and hide the panel depending whether there is something to show.
-		viewController.messagePanel.isHidden = viewController.messageLabel.isHidden &&
-			viewController.debugMessageLabel.isHidden &&
-			viewController.featurePointCountLabel.isHidden
+//        viewController.messagePanel.isHidden = viewController.messageLabel.isHidden &&
+////            viewController.debugMessageLabel.isHidden &&
+//            viewController.featurePointCountLabel.isHidden
 	}
 }
