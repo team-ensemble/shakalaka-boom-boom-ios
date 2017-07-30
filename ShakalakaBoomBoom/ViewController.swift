@@ -35,7 +35,7 @@ enum StatusType: String
     case failure = "error"
 }
 
-class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate, VirtualObjectSelectionViewControllerDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate,UITextFieldDelegate, VirtualObjectSelectionViewControllerDelegate {
     
     @IBOutlet weak var vibranceView: TranslucentView!
     @IBOutlet weak var canvasView: UIView!
@@ -43,6 +43,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     @IBOutlet weak var drawingCanvas: DrawView!
     @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var speechField: UILabel!
+    @IBOutlet weak var resultViewBottomconstraint: NSLayoutConstraint!
+    @IBOutlet weak var feedbackImageView: UIImageView!
+    @IBOutlet weak var feedbackTextField: UITextField!
+    @IBOutlet weak var sendFeedback: UIButton!
     
     var image: UIImage!
     var overViewType: AppStatus = .arview
@@ -59,7 +63,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         let vibrant = TranslucentView()
         vibrant.setTranslucentProperties(blurType: BlurType.darkBlur, vibrancyRequired: true)
         vibranceView.addSubview(vibrant)
-        
+        feedbackTextField.delegate = self
         setupBaseView()
         Setting.registerDefaults()
         setupScene()
@@ -70,6 +74,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     
     fileprivate func setupBaseView()
     {
+        feedbackImageView.isHidden = true
+        feedbackTextField.isHidden = true
+        feedbackTextField.resignFirstResponder()
+        sendFeedback.isHidden = true
         DispatchQueue.main.async {
             switch self.overViewType {
             case .canvas:
@@ -104,6 +112,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         super.viewWillDisappear(animated)
         session.pause()
     }
+    
     
     // MARK: - ARKit / ARSCNView
     let session = ARSession()
@@ -188,7 +197,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     
     func myImageUploadRequest()
     {
-        let myUrl = NSURL(string: GeneralConstants.serverURL)
+        let myUrl = NSURL(string: GeneralConstants.serverURL + GeneralConstants.uploadApi)
         
         let request = NSMutableURLRequest(url:myUrl! as URL)
         request.httpMethod = "POST";
@@ -210,81 +219,200 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         
         request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
         
-        
         //myActivityIndicator.startAnimating();
-        
+         self.task(request)
+    }
+    
+    func task(_ request: NSMutableURLRequest)
+    {
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             DispatchQueue.main.async {
                 self.resultView.isHidden = false
-
-
-            if error != nil {
-                self.stopSpinner()
-                self.handleRespnseViews()
-                self.speechField.text = error?.localizedDescription
-                print("error=\(String(describing: error))")
-                return
-            }
-            
-            // You can print out response object
-            print("******* response = \(String(describing: response))")
-            
-            // Print out reponse body
-            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("****** response data = \(responseString!)")
-            
-            do {
+                self.resultViewBottomconstraint.constant = 5
                 
-                let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]
-                let objStatus = json["status"] as? String
-                if let objStatus = objStatus
-                {
-                    switch objStatus
-                    {
-                    case "success":
-                        self.status = .success
-                    case "error":
-                        self.status = .failure
-                    default:
-                        self.status = .failure
-                    }
+                if error != nil {
                     self.stopSpinner()
-                    if self.status == .success
-                    {
-                        let obj = json["category"] as? String ?? ""
-                        self.setObject(type: obj)
-                        DispatchQueue.main.async {
-                            self.handleRespnseViews()
-                            self.vibranceView.isHidden = true
-                            self.speechField.text = "I think You want a " + obj + "😃 \nHere You go.."
-                        }
-                    }
-                    else
-                    {
-                        self.err = json["message"] as? String ?? "Somethings wrong"
-                        self.handleResponse(false)
-                        DispatchQueue.main.async {
-                            self.handleRespnseViews()
-                            self.speechField.text = GeneralConstants.failedResponseMsg
-                        }
-                    }
+                    self.handleRespnseViews()
+                    self.speechField.text = error?.localizedDescription
+                    print("error=\(String(describing: error))")
+                    return
                 }
                 
-            }catch
-            {
-                print(error)
-                self.stopSpinner()
-                DispatchQueue.main.async {
-                   self.handleRespnseViews()
-                    self.speechField.text = GeneralConstants.generalErrorMsg
+                // You can print out response object
+                print("******* response = \(String(describing: response))")
+                
+                // Print out reponse body
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                print("****** response data = \(responseString!)")
+                
+                do {
+                    
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]
+                    let objStatus = json["status"] as? String
+                    if let objStatus = objStatus
+                    {
+                        switch objStatus
+                        {
+                        case "success":
+                            self.status = .success
+                        case "error":
+                            self.status = .failure
+                        default:
+                            self.status = .failure
+                        }
+                        self.stopSpinner()
+                        if self.status == .success
+                        {
+                            let obj = json["category"] as? String ?? ""
+                            self.setObject(type: obj)
+                            DispatchQueue.main.async {
+                                self.handleRespnseViews()
+                                self.vibranceView.isHidden = true
+                                self.speechField.text = "I think You want a " + obj + "😃 \nHere You go.."
+                            }
+                        }
+                        else
+                        {
+                            self.err = json["message"] as? String ?? "Somethings wrong"
+                            self.handleResponse(false)
+                            DispatchQueue.main.async {
+                                self.handleRespnseViews()
+                                self.speechField.text = GeneralConstants.failedResponseMsg
+                                ///handle failure
+                                UIView.animate(withDuration: 0.5, animations: {
+                                    self.resultViewBottomconstraint.constant = 450
+                                    self.feedbackImageView.isHidden = false
+                                    self.feedbackTextField.isHidden = false
+                                    self.sendFeedback.isHidden = false
+                                   self.canvasView.isUserInteractionEnabled = true
+                                    self.feedbackTextField.becomeFirstResponder()
+                                })
+                            }
+                        }
+                    }
+                    
+                }catch
+                {
+                    print(error)
+                    self.stopSpinner()
+                    DispatchQueue.main.async {
+                        self.handleRespnseViews()
+                        self.speechField.text = GeneralConstants.generalErrorMsg
+                    }
+                    self.restartPlaneDetection()
                 }
-                self.restartPlaneDetection()
+                
             }
-            
-        }
         }
         task.resume()
+    }
+    
+    @IBAction func sendFeedBackSelected(_ sender: UIButton) {
+        if self.feedbackTextField.text != nil
+        {
+            self.setupFeedBack()
+            self.view.endEditing(true)
+        }
+        else
+        {
+            let ac = UIAlertController(title: "Hey!", message: "Please give a tag to your sketch", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
+    
+    func feedBackTask(_ request: NSMutableURLRequest)
+    {
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            DispatchQueue.main.async {
+                self.resultView.isHidden = false
+                
+                if error != nil {
+                    print("error=\(String(describing: error))")
+                    return
+                }
+                
+                // You can print out response object
+                print("******* response = \(String(describing: response))")
+                
+                // Print out reponse body
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                print("****** response data = \(responseString!)")
+                
+                do {
+                    
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]
+                    let objStatus = json["status"] as? String
+                    if let objStatus = objStatus
+                    {
+                        switch objStatus
+                        {
+                        case "success":
+                            self.status = .success
+                        case "error":
+                            self.status = .failure
+                        default:
+                            self.status = .failure
+                        }
+                        self.stopSpinner()
+                        if self.status == .success
+                        {
+                            DispatchQueue.main.async {
+                                self.speechField.text = "Feedback Captured, Thank you."
+                                self.feedbackTextField.isHidden = true
+                                self.sendFeedback.isHidden = true
+                                self.feedbackImageView.isHidden = true
+                            }
+                        }
+                        else
+                        {
+                            self.err = json["message"] as? String ?? "Somethings wrong"
+                            DispatchQueue.main.async {
+                                self.speechField.text = "Oops!"
+                            }
+                        }
+                    }
+                    
+                }catch
+                {
+                    print(error)
+                    self.stopSpinner()
+                    DispatchQueue.main.async {
+                        self.speechField.text = GeneralConstants.generalErrorMsg
+                    }
+                    self.restartPlaneDetection()
+                }
+                
+            }
+        }
+        task.resume()
+    }
+    
+    func setupFeedBack()
+    {
+        let myUrl = NSURL(string: GeneralConstants.serverURL + GeneralConstants.feedbackApi)
+        
+        let request = NSMutableURLRequest(url:myUrl! as URL)
+        request.httpMethod = "POST";
+        let text = self.feedbackTextField.text
+        let param = [
+            "suggested_category" : "\(String(describing: text))"
+        ]
+        
+        let boundary = generateBoundaryString()
+        
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        let imageData = UIImageJPEGRepresentation(image, 1)
+        
+        if(imageData==nil)  { return; }
+        
+        request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
+        
+        //myActivityIndicator.startAnimating();
+        self.feedBackTask(request)
     }
     
     func handleRespnseViews()
@@ -354,6 +482,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     func clearCanvas()
     {
         drawingCanvas.clear()
+        feedbackImageView.image = nil
+        feedbackTextField.text = nil
+        feedbackTextField.resignFirstResponder()
     }
     
     @IBAction func closeClicked(_ sender: UIButton)
@@ -376,6 +507,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
             if let capturedImage = drawingCanvas.captureImage()
             {
                 image = capturedImage
+                feedbackImageView.image = image
                 PHPhotoLibrary.requestAuthorization { status in
                     switch status {
                     case .authorized:
@@ -567,6 +699,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     var currentGesture: Gesture?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
         guard let object = virtualObject else {
             return
         }

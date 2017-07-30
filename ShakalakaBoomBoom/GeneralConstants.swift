@@ -11,7 +11,9 @@ import UIKit
 
 class GeneralConstants
 {
-    static let serverURL = "https://4b89041d.ngrok.io/upload"
+    static let serverURL = "https://f4752543.ngrok.io/"
+    static let uploadApi = "upload"
+    static let feedbackApi = "failure_feedback"
     static let screenHeight = UIScreen.main.bounds.size.height
     static let screenWidth = UIScreen.main.bounds.size.width
     
