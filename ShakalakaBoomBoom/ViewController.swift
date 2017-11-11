@@ -116,11 +116,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     
     // MARK: - ARKit / ARSCNView
     let session = ARSession()
-    var sessionConfig: ARSessionConfiguration = ARWorldTrackingSessionConfiguration()
+    var sessionConfig: ARConfiguration = ARWorldTrackingConfiguration()
     var use3DOFTracking = false {
         didSet {
             if use3DOFTracking {
-                sessionConfig = ARSessionConfiguration()
+                sessionConfig = AROrientationTrackingConfiguration()
             }
             sessionConfig.isLightEstimationEnabled = UserDefaults.standard.bool(for: .ambientLightEstimation)
             session.run(sessionConfig)
@@ -1053,7 +1053,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     func restartPlaneDetection() {
         
         // configure session
-        if let worldSessionConfig = sessionConfig as? ARWorldTrackingSessionConfiguration {
+        if let worldSessionConfig = sessionConfig as? ARWorldTrackingConfiguration {
             worldSessionConfig.planeDetection = .horizontal
             session.run(worldSessionConfig, options: [.resetTracking, .removeExistingAnchors])
         }
