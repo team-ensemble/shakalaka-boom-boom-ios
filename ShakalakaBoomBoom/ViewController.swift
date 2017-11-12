@@ -1219,6 +1219,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         navigationController.popoverPresentationController?.sourceRect = settingsButton.bounds
     }
     
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        self.vibranceView.isHidden = true
+        return true
+    }
+    
     @objc
     func dismissSettings() {
         self.dismiss(animated: true, completion: nil)
