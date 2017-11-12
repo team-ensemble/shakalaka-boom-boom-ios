@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -45,10 +45,10 @@
                                         <rect key="frame" x="30" y="40" width="315" height="407"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aha-VA-8tK" userLabel="eraserButton">
-                                                <rect key="frame" x="5" y="372" width="30" height="30"/>
+                                                <rect key="frame" x="5" y="358" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="0qi-76-7CG"/>
-                                                    <constraint firstAttribute="width" constant="30" id="9bZ-8w-KS2"/>
+                                                    <constraint firstAttribute="height" constant="44" id="0qi-76-7CG"/>
+                                                    <constraint firstAttribute="width" constant="44" id="9bZ-8w-KS2"/>
                                                 </constraints>
                                                 <state key="normal" image="eraser"/>
                                                 <connections>
@@ -56,10 +56,10 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCw-61-6v8" userLabel="checkButton">
-                                                <rect key="frame" x="280" y="372" width="30" height="30"/>
+                                                <rect key="frame" x="266" y="358" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="Jud-vO-Z32"/>
-                                                    <constraint firstAttribute="height" constant="30" id="O1H-x6-CgK"/>
+                                                    <constraint firstAttribute="width" constant="44" id="Jud-vO-Z32"/>
+                                                    <constraint firstAttribute="height" constant="44" id="O1H-x6-CgK"/>
                                                 </constraints>
                                                 <state key="normal" image="tickIcn"/>
                                                 <connections>
@@ -67,10 +67,10 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASA-yx-by5" userLabel="closeButton">
-                                                <rect key="frame" x="280" y="5" width="30" height="30"/>
+                                                <rect key="frame" x="266" y="5" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="c5G-Vq-wfG"/>
-                                                    <constraint firstAttribute="width" constant="30" id="eSX-1e-cjP"/>
+                                                    <constraint firstAttribute="height" constant="44" id="c5G-Vq-wfG"/>
+                                                    <constraint firstAttribute="width" constant="44" id="eSX-1e-cjP"/>
                                                 </constraints>
                                                 <state key="normal" image="shape"/>
                                                 <connections>
