@@ -332,14 +332,23 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         task.resume()
     }
     
+    func showFeedbackAlert() {
+        let ac = UIAlertController(title: "Hey!", message: "Please give a tag to your sketch", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+    
     @IBAction func sendFeedBackSelected(_ sender: UIButton) {
         if self.feedbackTextField.text?.isEmpty ?? true {
-            let ac = UIAlertController(title: "Hey!", message: "Please give a tag to your sketch", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
+            showFeedbackAlert()
         } else {
-            self.setupFeedBack()
-            self.view.endEditing(true)
+            let isEmpty = self.feedbackTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            if isEmpty! {
+                showFeedbackAlert()
+            } else {
+                self.setupFeedBack()
+                self.view.endEditing(true)
+            }
         }
     }
     
