@@ -333,16 +333,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     }
     
     @IBAction func sendFeedBackSelected(_ sender: UIButton) {
-        if self.feedbackTextField.text != nil
-        {
-            self.setupFeedBack()
-            self.view.endEditing(true)
-        }
-        else
-        {
+        if self.feedbackTextField.text?.isEmpty ?? true {
             let ac = UIAlertController(title: "Hey!", message: "Please give a tag to your sketch", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
+        } else {
+            self.setupFeedBack()
+            self.view.endEditing(true)
         }
     }
     
