@@ -47,6 +47,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     @IBOutlet weak var feedbackImageView: UIImageView!
     @IBOutlet weak var feedbackTextField: UITextField!
     @IBOutlet weak var sendFeedback: UIButton!
+    @IBOutlet weak var cancelFeedbackButton: UIButton!
     @IBOutlet weak var feedbackEntryViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var customTabBarView: UIView!
     
@@ -80,6 +81,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         feedbackTextField.isHidden = true
         feedbackTextField.resignFirstResponder()
         sendFeedback.isHidden = true
+        cancelFeedbackButton.isHidden = true
         DispatchQueue.main.async {
             switch self.overViewType {
             case .canvas:
@@ -309,7 +311,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                                     self.feedbackImageView.isHidden = false
                                     self.feedbackTextField.isHidden = false
                                     self.sendFeedback.isHidden = false
-                                   self.canvasView.isUserInteractionEnabled = true
+                                    self.cancelFeedbackButton.isHidden = false
+                                    self.canvasView.isUserInteractionEnabled = true
                                     self.feedbackTextField.becomeFirstResponder()
                                 })
                             }
@@ -350,6 +353,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                 self.view.endEditing(true)
             }
         }
+    }
+    
+    @IBAction func cancelFeedbackButtonTouched() {
+        overViewType = .arview
+        setupBaseView()
     }
     
     func feedBackTask(_ request: NSMutableURLRequest)
@@ -393,6 +401,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                                 self.speechField.text = "Feedback Captured, Thank you."
                                 self.feedbackTextField.isHidden = true
                                 self.sendFeedback.isHidden = true
+                                self.cancelFeedbackButton.isHidden = true
                                 self.feedbackImageView.isHidden = true
                             }
                         }

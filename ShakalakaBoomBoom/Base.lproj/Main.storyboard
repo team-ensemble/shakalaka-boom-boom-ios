@@ -156,14 +156,35 @@
                                                     <outlet property="delegate" destination="BV1-FR-VrT" id="cdv-UN-E6J"/>
                                                 </connections>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksr-0b-OCL" userLabel="Cancel Feedback">
+                                                <rect key="frame" x="8" y="12" width="60" height="36"/>
+                                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="60" id="TGH-tW-TPX"/>
+                                                    <constraint firstAttribute="height" constant="36" id="uV8-As-JFr"/>
+                                                </constraints>
+                                                <state key="normal" title="Cancel">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="cancelFeedbackButtonTouched" destination="BV1-FR-VrT" eventType="touchUpInside" id="ETj-C7-Ioe"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="ksr-0b-OCL" firstAttribute="centerY" secondItem="Rav-ha-uI9" secondAttribute="centerY" id="8JV-CO-GpA"/>
                                             <constraint firstAttribute="trailing" secondItem="Mxk-Ng-GSg" secondAttribute="trailing" constant="8" id="AIp-ZW-nqR"/>
+                                            <constraint firstItem="ane-HH-29t" firstAttribute="leading" secondItem="ksr-0b-OCL" secondAttribute="trailing" constant="8" id="LYg-hw-09W"/>
                                             <constraint firstItem="Mxk-Ng-GSg" firstAttribute="leading" secondItem="ane-HH-29t" secondAttribute="trailing" constant="8" id="RAP-zc-d2a"/>
                                             <constraint firstItem="Mxk-Ng-GSg" firstAttribute="centerY" secondItem="Rav-ha-uI9" secondAttribute="centerY" id="WTv-g2-koO"/>
                                             <constraint firstAttribute="height" constant="60" id="gEt-FQ-daC"/>
                                             <constraint firstItem="ane-HH-29t" firstAttribute="centerY" secondItem="Rav-ha-uI9" secondAttribute="centerY" id="pak-te-qgd"/>
-                                            <constraint firstItem="ane-HH-29t" firstAttribute="leading" secondItem="Rav-ha-uI9" secondAttribute="leading" constant="8" id="vPB-pD-4mz"/>
+                                            <constraint firstItem="ksr-0b-OCL" firstAttribute="leading" secondItem="Rav-ha-uI9" secondAttribute="leading" constant="8" id="qkL-e4-fmC"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -260,6 +281,7 @@
                         <viewLayoutGuide key="safeArea" id="GBj-4O-Whc"/>
                     </view>
                     <connections>
+                        <outlet property="cancelFeedbackButton" destination="ksr-0b-OCL" id="6ga-QA-vQd"/>
                         <outlet property="canvasView" destination="4Dn-4z-zMi" id="H7L-Ax-a4W"/>
                         <outlet property="customTabBarView" destination="rqj-bp-5aC" id="frf-ZO-Cd3"/>
                         <outlet property="drawingCanvas" destination="7Fq-cC-7Z8" id="vMA-AT-4TM"/>
