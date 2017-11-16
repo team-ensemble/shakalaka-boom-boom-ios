@@ -426,7 +426,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         
         let request = NSMutableURLRequest(url:myUrl! as URL)
         request.httpMethod = "POST";
-        let text = self.feedbackTextField.text
+        let text = self.feedbackTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let param = [
             "suggested_category" : "\(String(describing: text))"
         ]
