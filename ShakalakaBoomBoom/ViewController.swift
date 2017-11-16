@@ -47,6 +47,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     @IBOutlet weak var feedbackImageView: UIImageView!
     @IBOutlet weak var feedbackTextField: UITextField!
     @IBOutlet weak var sendFeedback: UIButton!
+    @IBOutlet weak var feedbackEntryViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var customTabBarView: UIView!
     
     var image: UIImage!
     var overViewType: AppStatus = .arview
@@ -106,11 +108,33 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         // Start the ARSession.
         restartPlaneDetection()
         setupBaseView()
+        
+        // Get notifications about keyboard activity
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         session.pause()
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        var userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        let changeInHeight = keyboardViewEndFrame.height - customTabBarView.frame.height
+        UIView.animate(withDuration: 2.0) {
+            self.feedbackEntryViewBottomConstraint.constant = changeInHeight
+        }
+    }
+    
+    @objc func keyboardWillHide(notification:NSNotification) {
+        UIView.animate(withDuration: 2.0) {
+            self.feedbackEntryViewBottomConstraint.constant = 0
+        }
     }
     
     
