@@ -7,12 +7,7 @@ Main view controller for the AR experience.
 
 
 import ARKit
-import Foundation
-import SceneKit
-import UIKit
 import Photos
-import AVFoundation
-import Speech
 
 enum AppStatus: Int
 {
@@ -58,7 +53,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     var err: String!
     let spinner = UIActivityIndicatorView()
     
-    var showClear: Bool? = false
     // MARK: - Main Setup & View Controller methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,7 +159,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         
         sceneView.preferredFramesPerSecond = 60
         sceneView.contentScaleFactor = 1.3
-        //sceneView.showsStatistics = true
         
         enableEnvironmentMapWithIntensity(25.0)
         
@@ -245,7 +238,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         
         request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
         
-        //myActivityIndicator.startAnimating();
          self.task(request)
     }
     
@@ -450,7 +442,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         
         request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
         
-        //myActivityIndicator.startAnimating();
         self.feedBackTask(request)
     }
     
