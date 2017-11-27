@@ -779,7 +779,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         let cameraPos = SCNVector3.positionFromTransform(cameraTransform)
         let vectorToCamera = cameraPos - object.position
         
-        let distanceToUser = vectorToCamera.length()
+        _ = vectorToCamera.length()
         
         var angleDegrees = Int(((object.eulerAngles.y) * 180) / Float.pi) % 360
         if angleDegrees < 0 {
@@ -1057,7 +1057,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         
-        let pos = SCNVector3.positionFromTransform(anchor.transform)
+        _ = SCNVector3.positionFromTransform(anchor.transform)
         
         let plane = Plane(anchor, showDebugVisuals)
         
@@ -1212,8 +1212,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         case .authorized:
             takeScreenshotBlock()
         case .restricted, .denied:
-            let title = "Photos access denied"
-            let message = "Please enable Photos access for this application in Settings > Privacy to allow saving screenshots."
+            _ = "Photos access denied"
+            _ = "Please enable Photos access for this application in Settings > Privacy to allow saving screenshots."
         case .notDetermined:
             PHPhotoLibrary.requestAuthorization({ (authorizationStatus) in
                 if authorizationStatus == .authorized {
@@ -1281,7 +1281,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         
         if allowRestart {
             // Present an alert informing about the error that has occurred.
-            let restartAction = UIAlertAction(title: "Reset", style: .default) { _ in
+            _ = UIAlertAction(title: "Reset", style: .default) { _ in
                 self.restartExperience(self)
             }
         } else {
