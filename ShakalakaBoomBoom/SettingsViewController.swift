@@ -59,29 +59,6 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         populateSettings()
     }
-
-	@IBAction func didChangeSetting(_ sender: UISwitch) {
-		let defaults = UserDefaults.standard
-		switch sender {
-            case debugModeSwitch:
-                defaults.set(sender.isOn, for: .debugMode)
-            case scaleWithPinchGestureSwitch:
-                defaults.set(sender.isOn, for: .scaleWithPinchGesture)
-            case ambientLightEstimateSwitch:
-                defaults.set(sender.isOn, for: .ambientLightEstimation)
-            case dragOnInfinitePlanesSwitch:
-                defaults.set(sender.isOn, for: .dragOnInfinitePlanes)
-            case showHitTestAPISwitch:
-                defaults.set(sender.isOn, for: .showHitTestAPI)
-            case use3DOFTrackingSwitch:
-                defaults.set(sender.isOn, for: .use3DOFTracking)
-            case useAuto3DOFFallbackSwitch:
-                defaults.set(sender.isOn, for: .use3DOFFallback)
-			case useOcclusionPlanesSwitch:
-				defaults.set(sender.isOn, for: .useOcclusionPlanes)
-            default: break
-		}
-	}
 	
 	private func populateSettings() {
 		let defaults = UserDefaults.standard
@@ -95,4 +72,28 @@ class SettingsViewController: UITableViewController {
 		useAuto3DOFFallbackSwitch.isOn = defaults.bool(for: .use3DOFFallback)
 		useOcclusionPlanesSwitch.isOn = defaults.bool(for: .useOcclusionPlanes)
 	}
+    
+    @IBAction func didChangeSetting(_ sender: UISwitch) {
+        let defaults = UserDefaults.standard
+        switch sender {
+        case debugModeSwitch:
+            defaults.set(sender.isOn, for: .debugMode)
+        case scaleWithPinchGestureSwitch:
+            defaults.set(sender.isOn, for: .scaleWithPinchGesture)
+        case ambientLightEstimateSwitch:
+            defaults.set(sender.isOn, for: .ambientLightEstimation)
+        case dragOnInfinitePlanesSwitch:
+            defaults.set(sender.isOn, for: .dragOnInfinitePlanes)
+        case showHitTestAPISwitch:
+            defaults.set(sender.isOn, for: .showHitTestAPI)
+        case use3DOFTrackingSwitch:
+            defaults.set(sender.isOn, for: .use3DOFTracking)
+        case useAuto3DOFFallbackSwitch:
+            defaults.set(sender.isOn, for: .use3DOFFallback)
+        case useOcclusionPlanesSwitch:
+            defaults.set(sender.isOn, for: .useOcclusionPlanes)
+        default:
+            break
+        }
+    }
 }

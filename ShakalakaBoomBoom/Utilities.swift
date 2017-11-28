@@ -40,6 +40,7 @@ extension UIImage {
 }
 
 // MARK: - Collection extensions
+
 extension Array where Iterator.Element == CGFloat {
 	var average: CGFloat? {
 		guard !isEmpty else {

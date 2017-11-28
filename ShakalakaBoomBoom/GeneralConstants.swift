@@ -9,8 +9,7 @@
 import Foundation
 import UIKit
 
-class GeneralConstants
-{
+class GeneralConstants {
     static let serverURL = "https://f4752543.ngrok.io/"
     static let uploadApi = "upload"
     static let feedbackApi = "failure_feedback"

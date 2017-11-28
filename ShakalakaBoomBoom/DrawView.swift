@@ -127,7 +127,7 @@ class DrawView: UIView {
         return preRenderImage != nil || !bezierPath.isEmpty
     }
     
-    //Mark: - Catpure
+    // Mark: - Catpure
     
     func captureImage() -> UIImage?
     {

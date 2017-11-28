@@ -9,14 +9,12 @@ Main view controller for the AR experience.
 import ARKit
 import Photos
 
-enum AppStatus: Int
-{
+enum AppStatus: Int {
     case canvas
     case arview
 }
 
-enum ObjectType: String
-{
+enum ObjectType: String {
     case chair = "chair"
     case vase = "vase"
     case lamp = "lamp"
@@ -24,13 +22,12 @@ enum ObjectType: String
     case cup = "cup"
 }
 
-enum StatusType: String
-{
+enum StatusType: String {
     case success = "success"
     case failure = "error"
 }
 
-class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate,UITextFieldDelegate, VirtualObjectSelectionViewControllerDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate, UITextFieldDelegate, VirtualObjectSelectionViewControllerDelegate {
     
     @IBOutlet weak var vibranceView: TranslucentView!
     @IBOutlet weak var canvasView: UIView!
@@ -54,6 +51,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     let spinner = UIActivityIndicatorView()
     
     // MARK: - Main Setup & View Controller methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,8 +67,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         resetVirtualObject()
     }
     
-    fileprivate func setupBaseView()
-    {
+    fileprivate func setupBaseView() {
         feedbackImageView.isHidden = true
         feedbackTextField.isHidden = true
         feedbackTextField.resignFirstResponder()
@@ -133,8 +130,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         }
     }
     
-    
     // MARK: - ARKit / ARSCNView
+    
     let session = ARSession()
     var sessionConfig: ARConfiguration = ARWorldTrackingConfiguration()
     var use3DOFTracking = false {
@@ -147,11 +144,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         }
     }
     var use3DOFTrackingFallback = false
-    
     var screenCenter: CGPoint?
     
     func setupScene() {
-        // set up sceneView
+        // Set up sceneView
         sceneView.delegate = self
         sceneView.session = session
         sceneView.antialiasingMode = .multisampling4X
@@ -183,14 +179,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         sceneView.scene.lightingEnvironment.intensity = intensity
     }
     
-    // MARK: - SESSION
+    // MARK: - Session
+    
     func generateBoundaryString() -> String {
         return "Boundary-\(NSUUID().uuidString)"
     }
     
     func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData, boundary: String) -> NSData {
         let body = NSMutableData()
-        
         
         if parameters != nil {
             for (key, value) in parameters! {
@@ -208,41 +204,38 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         body.appendString("Content-Type: \(mimetype)\r\n\r\n")
         body.append(imageDataKey as Data)
         body.appendString("\r\n")
-        
         body.appendString("--\(boundary)--\r\n")
         
         return body
     }
     
-    func myImageUploadRequest()
-    {
+    func myImageUploadRequest() {
         let myUrl = NSURL(string: GeneralConstants.serverURL + GeneralConstants.uploadApi)
         
         let request = NSMutableURLRequest(url:myUrl! as URL)
-        request.httpMethod = "POST";
+        request.httpMethod = "POST"
         
         let param = [
-            "firstName"  : "A",
-            "lastName"    : "B",
-            "userId"    : "007"
+            "firstName": "A",
+            "lastName": "B",
+            "userId": "007"
         ]
         
         let boundary = generateBoundaryString()
         
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
-        
         let imageData = UIImageJPEGRepresentation(image, 1)
-        
-        if(imageData==nil)  { return; }
+        if imageData == nil {
+            return
+        }
         
         request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
         
-         self.task(request)
+        self.task(request)
     }
     
-    func task(_ request: NSMutableURLRequest)
-    {
+    func task(_ request: NSMutableURLRequest) {
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             DispatchQueue.main.async {
@@ -257,7 +250,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                     return
                 }
                 
-                // You can print out response object
+                // Print out response object
                 print("******* response = \(String(describing: response))")
                 
                 // Print out reponse body
@@ -265,13 +258,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                 print("****** response data = \(responseString!)")
                 
                 do {
-                    
-                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: Any]
                     let objStatus = json["status"] as? String
-                    if let objStatus = objStatus
-                    {
-                        switch objStatus
-                        {
+                    if let objStatus = objStatus {
+                        switch objStatus {
                         case "success":
                             self.status = .success
                         case "error":
@@ -280,8 +270,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                             self.status = .failure
                         }
                         self.stopSpinner()
-                        if self.status == .success
-                        {
+                        if self.status == .success {
                             let obj = json["category"] as? String ?? ""
                             self.setObject(type: obj)
                             DispatchQueue.main.async {
@@ -289,15 +278,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                                 self.vibranceView.isHidden = true
                                 self.speechField.text = "I think You want a " + obj + "😃 \nHere You go.."
                             }
-                        }
-                        else
-                        {
+                        } else {
                             self.err = json["message"] as? String ?? "Somethings wrong"
                             self.handleResponse(false)
                             DispatchQueue.main.async {
                                 self.handleRespnseViews()
                                 self.speechField.text = GeneralConstants.failedResponseMsg
-                                ///handle failure
+                                // Handle failure
                                 UIView.animate(withDuration: 0.5, animations: {
                                     self.resultViewBottomconstraint.constant = 450
                                     self.feedbackImageView.isHidden = false
@@ -310,9 +297,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                             }
                         }
                     }
-                    
-                }catch
-                {
+                } catch {
                     print(error)
                     self.stopSpinner()
                     DispatchQueue.main.async {
@@ -321,7 +306,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                     }
                     self.restartPlaneDetection()
                 }
-                
             }
         }
         task.resume()
@@ -352,8 +336,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         setupBaseView()
     }
     
-    func feedBackTask(_ request: NSMutableURLRequest)
-    {
+    func feedBackTask(_ request: NSMutableURLRequest) {
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             DispatchQueue.main.async {
@@ -364,7 +347,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                     return
                 }
                 
-                // You can print out response object
+                // Print out response object
                 print("******* response = \(String(describing: response))")
                 
                 // Print out reponse body
@@ -372,13 +355,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                 print("****** response data = \(responseString!)")
                 
                 do {
-                    
                     let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]
                     let objStatus = json["status"] as? String
-                    if let objStatus = objStatus
-                    {
-                        switch objStatus
-                        {
+                    if let objStatus = objStatus {
+                        switch objStatus {
                         case "success":
                             self.status = .success
                         case "error":
@@ -387,8 +367,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                             self.status = .failure
                         }
                         self.stopSpinner()
-                        if self.status == .success
-                        {
+                        if self.status == .success {
                             DispatchQueue.main.async {
                                 self.speechField.text = "Feedback Captured, Thank you."
                                 self.feedbackTextField.isHidden = true
@@ -396,18 +375,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                                 self.cancelFeedbackButton.isHidden = true
                                 self.feedbackImageView.isHidden = true
                             }
-                        }
-                        else
-                        {
+                        } else {
                             self.err = json["message"] as? String ?? "Somethings wrong"
                             DispatchQueue.main.async {
                                 self.speechField.text = "Oops!"
                             }
                         }
                     }
-                    
-                }catch
-                {
+                } catch {
                     print(error)
                     self.stopSpinner()
                     DispatchQueue.main.async {
@@ -415,21 +390,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                     }
                     self.restartPlaneDetection()
                 }
-                
             }
         }
         task.resume()
     }
     
-    func setupFeedBack()
-    {
+    func setupFeedBack() {
         let myUrl = NSURL(string: GeneralConstants.serverURL + GeneralConstants.feedbackApi)
         
         let request = NSMutableURLRequest(url:myUrl! as URL)
         request.httpMethod = "POST";
         let text = self.feedbackTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let param = [
-            "suggested_category" : "\(String(describing: text))"
+            "suggested_category": "\(String(describing: text))"
         ]
         
         let boundary = generateBoundaryString()
@@ -438,15 +411,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         
         let imageData = UIImageJPEGRepresentation(image, 1)
         
-        if(imageData==nil)  { return; }
+        if imageData == nil {
+            return
+        }
         
         request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary) as Data
         
         self.feedBackTask(request)
     }
     
-    func handleRespnseViews()
-    {
+    func handleRespnseViews() {
         self.resultView.isHidden = false
         self.vibranceView.isHidden = false
         self.drawingCanvas.isHidden = true
@@ -455,10 +429,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     
     // MARK: - Handle AR
     
-    func setObject( type: String)
-    {
-        switch type
-        {
+    func setObject( type: String) {
+        switch type {
         case ObjectType.candle.rawValue:
             self.objectKind = .candle
         case ObjectType.chair.rawValue:
@@ -475,11 +447,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         self.handleSuccess()
     }
     
-    func handleSuccess()
-    {
+    func handleSuccess() {
         var index: Int!
-        switch self.objectKind
-        {
+        switch self.objectKind {
         case ObjectType.candle:
             index = 0
         case ObjectType.chair:
@@ -495,114 +465,97 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     }
     
     // MARK: - Button Action
-   
     
-    @IBAction func canvasSelected(_ sender: UIButton)
-    {
+    @IBAction func canvasSelected(_ sender: UIButton) {
         self.overViewType = .canvas
         resetVirtualObject()
         setupBaseView()
     }
     
-    @IBAction func clearClicked(_ sender: UIButton)
-    {
+    @IBAction func clearClicked(_ sender: UIButton) {
         clearCanvas()
     }
     
-    func clearCanvas()
-    {
+    func clearCanvas() {
         drawingCanvas.clear()
         feedbackImageView.image = nil
         feedbackTextField.text = nil
         feedbackTextField.resignFirstResponder()
     }
     
-    @IBAction func closeClicked(_ sender: UIButton)
-    {
+    @IBAction func closeClicked(_ sender: UIButton) {
         overViewType = .arview
         setupBaseView()
     }
-    @IBAction func sendClicked(_ sender: UIButton)
-    {
-            // Show progress indicator
-            DispatchQueue.main.async {
-                self.spinner.center = self.sceneView.center
-                self.spinner.bounds.size = CGSize(width: 50, height: 50)
-                self.sceneView.addSubview(self.spinner)
-                self.spinner.startAnimating()
-                
-            }
-            
-            
-            if let capturedImage = drawingCanvas.captureImage()
-            {
-                image = capturedImage
-                feedbackImageView.image = image
-                PHPhotoLibrary.requestAuthorization { status in
-                    switch status {
-                    case .authorized:
-                        DispatchQueue.main.async {
-                            UIImageWriteToSavedPhotosAlbum(capturedImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-                            self.overViewType = .arview
-                            self.setupBaseView()
-                        }
-                    case .restricted:
-                        self.stopSpinner()
-                        self.handleResponse(false)
-                    case .denied:
-                        self.stopSpinner()
-                        self.handleResponse(false)
-                    default:
-                        self.stopSpinner()
-                        // place for .notDetermined - in this callback status is already determined so should never get here
-                        break
+    
+    @IBAction func sendClicked(_ sender: UIButton) {
+        // Show progress indicator
+        DispatchQueue.main.async {
+            self.spinner.center = self.sceneView.center
+            self.spinner.bounds.size = CGSize(width: 50, height: 50)
+            self.sceneView.addSubview(self.spinner)
+            self.spinner.startAnimating()
+        }
+        
+        if let capturedImage = drawingCanvas.captureImage() {
+            image = capturedImage
+            feedbackImageView.image = image
+            PHPhotoLibrary.requestAuthorization { status in
+                switch status {
+                case .authorized:
+                    DispatchQueue.main.async {
+                        UIImageWriteToSavedPhotosAlbum(capturedImage, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+                        self.overViewType = .arview
+                        self.setupBaseView()
                     }
+                case .restricted:
+                    self.stopSpinner()
+                    self.handleResponse(false)
+                case .denied:
+                    self.stopSpinner()
+                    self.handleResponse(false)
+                default:
+                    self.stopSpinner()
+                    // Place for .notDetermined - in this callback status is already determined so should never get here
+                    break
                 }
             }
-            else
-            {
-                let ac = UIAlertController(title: "Hey!", message: "Draw something, atleast!", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default))
-                present(ac, animated: true)
-                self.stopSpinner()
-                self.resetVirtualObject()
-                canvasView.isHidden = false
-                self.vibranceView.isHidden = false
-            }
+        } else {
+            let ac = UIAlertController(title: "Hey!", message: "Draw something, atleast!", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+            self.stopSpinner()
+            self.resetVirtualObject()
+            canvasView.isHidden = false
+            self.vibranceView.isHidden = false
+        }
     }
     
-    func stopSpinner()
-    {
+    func stopSpinner() {
         DispatchQueue.main.async {
             self.spinner.stopAnimating()
         }
     }
     
     //MARK: - Add image to Library
-    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer)
-    {
-        if let _ = error
-        {
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let _ = error {
             handleResponse(false)
             self.stopSpinner()
-        }
-        else
-        {
+        } else {
             myImageUploadRequest()
         }
     }
     
     //MARK: - Helper Methods
-    func handleResponse(_ isSuccess: Bool = false)
-    {
-        if isSuccess
-        {
+    
+    func handleResponse(_ isSuccess: Bool = false) {
+        if isSuccess {
             let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
-        }
-        else
-        {
+        } else {
             DispatchQueue.main.async {
                 self.handleRespnseViews()
                 self.speechField.text = "Something is not right"
@@ -711,13 +664,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         
         if enabled {
             if !sessionConfig.isLightEstimationEnabled {
-                // turn on light estimation
+                // Turn on light estimation
                 sessionConfig.isLightEstimationEnabled = true
                 session.run(sessionConfig)
             }
         } else {
             if sessionConfig.isLightEstimationEnabled {
-                // turn off light estimation
+                // Turn off light estimation
                 sessionConfig.isLightEstimationEnabled = false
                 session.run(sessionConfig)
             }
@@ -785,7 +738,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         if angleDegrees < 0 {
             angleDegrees += 360
         }
-        
     }
     
     func moveVirtualObjectToPosition(_ pos: SCNVector3?, _ instantly: Bool, _ filterPosition: Bool) {
@@ -905,7 +857,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         virtualObject?.removeFromParentNode()
         virtualObject = nil
         
-        
         // Reset selected object id for row highlighting in object selection view controller.
         UserDefaults.standard.set(-1, for: .selectedObjectID)
     }
@@ -998,9 +949,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     func loadVirtualObject(at index: Int) {
         resetVirtualObject()
         
-        
-        
-        
         // Load the content asynchronously.
         DispatchQueue.global().async {
             self.isLoadingObject = true
@@ -1082,13 +1030,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     
     func restartPlaneDetection() {
         
-        // configure session
+        // Configure session
         if let worldSessionConfig = sessionConfig as? ARWorldTrackingConfiguration {
             worldSessionConfig.planeDetection = .horizontal
             session.run(worldSessionConfig, options: [.resetTracking, .removeExistingAnchors])
         }
         
-        // reset timer
+        // Reset timer
         if trackingFallbackTimer != nil {
             trackingFallbackTimer!.invalidate()
             trackingFallbackTimer = nil
@@ -1141,7 +1089,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     @IBOutlet var featurePointCountLabel: UILabel!
     
     func refreshFeaturePoints() {
-    
+        
     }
     
     var showDebugVisuals: Bool = UserDefaults.standard.bool(for: .debugMode) {
@@ -1156,7 +1104,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                 sceneView.debugOptions = []
             }
             
-            // save pref
+            // Save pref
             UserDefaults.standard.set(showDebugVisuals, for: .debugMode)
         }
     }
@@ -1289,6 +1237,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     }
     
     // MARK: - UIPopoverPresentationControllerDelegate
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }

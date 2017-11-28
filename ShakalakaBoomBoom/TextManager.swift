@@ -22,13 +22,13 @@ class TextManager {
 	}
 	
 	func showMessage(_ text: String, autoHide: Bool = true) {
-		// cancel any previous hide timer
+		// Cancel any previous hide timer
 		messageHideTimer?.invalidate()
 		
-		// set text
+		// Set text
 //        viewController.messageLabel.text = text
 		
-		// make sure status is showing
+		// Make sure status is showing
 		showHideMessage(hide: false, animated: true)
 		
 		if autoHide {
@@ -52,13 +52,13 @@ class TextManager {
 			return
 		}
 		
-		// cancel any previous hide timer
+		// Cancel any previous hide timer
 		debugMessageHideTimer?.invalidate()
 		
-		// set text
+		// Set text
 //        viewController.debugMessageLabel.text = message
 		
-		// make sure debug message is showing
+		// Make sure debug message is showing
 		showHideDebugMessage(hide: false, animated: true)
 		
 		// Compute an appropriate amount of time to display the on screen message.
@@ -85,10 +85,14 @@ class TextManager {
 		
 		var timer: Timer?
 		switch messageType {
-		case .contentPlacement: timer = contentPlacementMessageTimer
-		case .focusSquare: timer = focusSquareMessageTimer
-		case .planeEstimation: timer = planeEstimationMessageTimer
-		case .trackingStateEscalation: timer = trackingStateFeedbackEscalationTimer
+		case .contentPlacement:
+            timer = contentPlacementMessageTimer
+		case .focusSquare:
+            timer = focusSquareMessageTimer
+		case .planeEstimation:
+            timer = planeEstimationMessageTimer
+		case .trackingStateEscalation:
+            timer = trackingStateFeedbackEscalationTimer
 		}
 		
 		if timer != nil {
@@ -103,10 +107,14 @@ class TextManager {
 										timer = nil
 		})
 		switch messageType {
-		case .contentPlacement: contentPlacementMessageTimer = timer
-		case .focusSquare: focusSquareMessageTimer = timer
-		case .planeEstimation: planeEstimationMessageTimer = timer
-		case .trackingStateEscalation: trackingStateFeedbackEscalationTimer = timer
+		case .contentPlacement:
+            contentPlacementMessageTimer = timer
+		case .focusSquare:
+            focusSquareMessageTimer = timer
+		case .planeEstimation:
+            planeEstimationMessageTimer = timer
+		case .trackingStateEscalation:
+            trackingStateFeedbackEscalationTimer = timer
 		}
 	}
 	
@@ -134,12 +142,15 @@ class TextManager {
 				title = "Tracking status: Limited."
 				message = "Tracking status has been limited for an extended time. "
 				switch reason {
-				case .excessiveMotion: message += "Try slowing down your movement, or reset the session."
-				case .insufficientFeatures: message += "Try pointing at a flat surface, or reset the session."
+				case .excessiveMotion:
+                    message += "Try slowing down your movement, or reset the session."
+				case .insufficientFeatures:
+                    message += "Try pointing at a flat surface, or reset the session."
                 case .initializing:
                     break
                 }
-			case .normal: break
+			case .normal:
+                break
 			}
 			
 			let restartAction = UIAlertAction(title: "Reset", style: .destructive, handler: { _ in
@@ -156,10 +167,14 @@ class TextManager {
 	func cancelScheduledMessage(forType messageType: MessageType) {
 		var timer: Timer?
 		switch messageType {
-		case .contentPlacement: timer = contentPlacementMessageTimer
-		case .focusSquare: timer = focusSquareMessageTimer
-		case .planeEstimation: timer = planeEstimationMessageTimer
-		case .trackingStateEscalation: timer = trackingStateFeedbackEscalationTimer
+		case .contentPlacement:
+            timer = contentPlacementMessageTimer
+		case .focusSquare:
+            timer = focusSquareMessageTimer
+		case .planeEstimation:
+            timer = planeEstimationMessageTimer
+		case .trackingStateEscalation:
+            timer = trackingStateFeedbackEscalationTimer
 		}
 		
 		if timer != nil {
@@ -213,6 +228,7 @@ class TextManager {
 	}
 	
 	// MARK: - Private
+    
 	private var viewController: ViewController!
 	
 	// Timers for hiding regular and debug messages

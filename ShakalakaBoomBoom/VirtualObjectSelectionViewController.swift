@@ -44,6 +44,7 @@ class VirtualObjectSelectionViewController: UIViewController, UITableViewDataSou
 	}
 	
 	// MARK: - UITableViewDelegate
+    
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// Check if the current row is already selected, then deselect it.
 		if indexPath.row == selectedVirtualObjectRow {
@@ -56,6 +57,7 @@ class VirtualObjectSelectionViewController: UIViewController, UITableViewDataSou
 	}
 	
 	// MARK: - UITableViewDataSource
+    
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return VirtualObject.availableObjects.count
 	}
@@ -105,6 +107,7 @@ class VirtualObjectSelectionViewController: UIViewController, UITableViewDataSou
 }
 
 // MARK: - VirtualObjectSelectionViewControllerDelegate
+
 protocol VirtualObjectSelectionViewControllerDelegate: class {
 	func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didSelectObjectAt index: Int)
 	func virtualObjectSelectionViewControllerDidDeselectObject(_: VirtualObjectSelectionViewController)
