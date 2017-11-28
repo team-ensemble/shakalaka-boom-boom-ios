@@ -17,6 +17,6 @@ class GeneralConstants {
     static let screenWidth = UIScreen.main.bounds.size.width
     
     static let networkError = "Server is not reachable, please try after sometime."
-    static let generalErrorMsg = "Oops something went wrong."
-    static let failedResponseMsg = "Im Still learning👨🏻‍💻 .. I couldnt Find what you were looking for"
+    static let generalErrorMsg = "Oops! Something went wrong."
+    static let failedResponseMsg = "I couldn't find what you were looking for. Please help me learn👨🏻‍💻"
 }

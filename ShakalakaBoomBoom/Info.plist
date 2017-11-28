@@ -27,7 +27,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The location is used for augmenting reality</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Save photos of your ARExperience</string>
+	<string>Save photos of your AR experience</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Save photos of your AR experience</string>
 	<key>UILaunchStoryboardName</key>

@@ -144,8 +144,8 @@
                                                     <action selector="sendFeedBackSelected:" destination="BV1-FR-VrT" eventType="touchUpInside" id="JuD-Pp-Ied"/>
                                                 </connections>
                                             </button>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please sssign a Tag " minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ane-HH-29t">
-                                                <rect key="frame" x="8" y="12" width="291" height="36"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a tag" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ane-HH-29t">
+                                                <rect key="frame" x="76" y="12" width="223" height="36"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="36" id="fkl-H7-2Q8"/>
                                                 </constraints>

@@ -276,10 +276,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                             DispatchQueue.main.async {
                                 self.handleRespnseViews()
                                 self.vibranceView.isHidden = true
-                                self.speechField.text = "I think You want a " + obj + "😃 \nHere You go.."
+                                self.speechField.text = "I think you want a " + obj + ".\nHere you go...😃"
                             }
                         } else {
-                            self.err = json["message"] as? String ?? "Somethings wrong"
+                            self.err = json["message"] as? String ?? "Something is wrong."
                             self.handleResponse(false)
                             DispatchQueue.main.async {
                                 self.handleRespnseViews()
@@ -312,7 +312,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     }
     
     func showFeedbackAlert() {
-        let ac = UIAlertController(title: "Hey!", message: "Please give a tag to your sketch", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Hey!", message: "Please assign a tag to your sketch.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
     }
@@ -369,14 +369,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                         self.stopSpinner()
                         if self.status == .success {
                             DispatchQueue.main.async {
-                                self.speechField.text = "Feedback Captured, Thank you."
+                                self.speechField.text = "Feedback captured, thank you."
                                 self.feedbackTextField.isHidden = true
                                 self.sendFeedback.isHidden = true
                                 self.cancelFeedbackButton.isHidden = true
                                 self.feedbackImageView.isHidden = true
                             }
                         } else {
-                            self.err = json["message"] as? String ?? "Somethings wrong"
+                            self.err = json["message"] as? String ?? "Something is wrong."
                             DispatchQueue.main.async {
                                 self.speechField.text = "Oops!"
                             }
@@ -521,7 +521,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                 }
             }
         } else {
-            let ac = UIAlertController(title: "Hey!", message: "Draw something, atleast!", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Hey!", message: "Draw something, at least!", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
             self.stopSpinner()
@@ -558,7 +558,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         } else {
             DispatchQueue.main.async {
                 self.handleRespnseViews()
-                self.speechField.text = "Something is not right"
+                self.speechField.text = "Something is not right."
             }
         }
     }
