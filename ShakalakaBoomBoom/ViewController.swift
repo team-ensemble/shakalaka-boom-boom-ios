@@ -196,7 +196,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
             }
         }
         
-        let filename = "user-profile.jpg"
+        let randomString = NSUUID().uuidString
+        let filename = "\(randomString).jpg"
         let mimetype = "image/jpg"
         
         body.appendString("--\(boundary)\r\n")
