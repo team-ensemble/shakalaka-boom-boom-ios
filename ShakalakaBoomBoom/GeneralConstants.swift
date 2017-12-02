@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class GeneralConstants {
-    static let serverURL = "https://f4752543.ngrok.io/"
+    static let serverURL = "https://YOUR_SERVER_URL/"
     static let uploadApi = "upload"
     static let feedbackApi = "failure_feedback"
     static let screenHeight = UIScreen.main.bounds.size.height
