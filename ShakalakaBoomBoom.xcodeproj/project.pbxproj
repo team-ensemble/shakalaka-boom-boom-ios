@@ -192,9 +192,8 @@
 				TargetAttributes = {
 					3929C4871E89EC2C00E00B60 = {
 						CreatedOnToolsVersion = 9.0;
-						DevelopmentTeam = 849UP4BSN8;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -376,15 +375,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jnanesh Nayak (QQ4E7JP8E3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jnanesh Nayak (QQ4E7JP8E3)";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 849UP4BSN8;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ShakalakaBoomBoom/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ymedialabs.devteam;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.team-ensemble.shakalakaBoomBoom";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e967d2db-3a43-4839-a66d-6426c2ea149a";
-				PROVISIONING_PROFILE_SPECIFIER = "Dev Team";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -396,15 +395,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jnanesh Nayak (QQ4E7JP8E3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jnanesh Nayak (QQ4E7JP8E3)";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 849UP4BSN8;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ShakalakaBoomBoom/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ymedialabs.devteam;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.team-ensemble.shakalakaBoomBoom";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e967d2db-3a43-4839-a66d-6426c2ea149a";
-				PROVISIONING_PROFILE_SPECIFIER = "Dev Team";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
