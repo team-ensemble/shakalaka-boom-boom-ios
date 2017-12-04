@@ -1,5 +1,7 @@
 # Shakalaka Boom Boom
-Shakalaka Boom Boom is an A.I. experiment which creates a magical experience by converting anything drawn on a mobile canvas into a real object in augmented reality world.
+Shakalaka Boom Boom is an A.I. experiment which creates a magical experience by converting anything drawn on a mobile canvas into a real object in augmented reality world. To get better picture about the project, check out the video below
+
+[![Shakalaka Boom Boom Video](https://img.youtube.com/vi/nWA-mP8DAiA/0.jpg)](https://www.youtube.com/watch?v=nWA-mP8DAiA)
 
 ## About this repository
 This repository contains the code for the Shakalaka Boom Boom experiment iOS app only.
