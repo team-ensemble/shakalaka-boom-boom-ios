@@ -42,6 +42,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     @IBOutlet weak var cancelFeedbackButton: UIButton!
     @IBOutlet weak var feedbackEntryViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var customTabBarView: UIView!
+    @IBOutlet weak var walkthroughVisualEffectView: UIVisualEffectView!
     
     var image: UIImage!
     var overViewType: AppStatus = .arview
@@ -536,6 +537,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         DispatchQueue.main.async {
             self.spinner.stopAnimating()
         }
+    }
+    
+    @IBAction func helpButtonTouched(_ sender: UIButton) {
+        if sender.image(for: .normal) == #imageLiteral(resourceName: "HelpIcon") {
+            sender.setImage(#imageLiteral(resourceName: "shape"), for: .normal)
+        } else {
+            sender.setImage(#imageLiteral(resourceName: "HelpIcon"), for: .normal)
+        }
+        walkthroughVisualEffectView.isHidden = !walkthroughVisualEffectView.isHidden
     }
     
     //MARK: - Add image to Library
