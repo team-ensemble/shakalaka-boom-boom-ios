@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -27,6 +27,10 @@
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E6c-py-dvH" customClass="ARSCNView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </sceneKitView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bli-oA-xuH" userLabel="Help Button">
+                                <rect key="frame" x="341" y="30" width="24" height="24"/>
+                                <state key="normal" image="HelpIcon"/>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5w-99-VGP" userLabel="vibranceView" customClass="TranslucentView" customModule="ShakalakaBoomBoom" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -272,9 +276,11 @@
                             <constraint firstItem="W5w-99-VGP" firstAttribute="top" secondItem="RLh-bf-1c3" secondAttribute="top" id="EuF-Eb-ygl"/>
                             <constraint firstItem="4Dn-4z-zMi" firstAttribute="top" secondItem="GBj-4O-Whc" secondAttribute="top" id="QQv-BD-7rc"/>
                             <constraint firstItem="W5w-99-VGP" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" id="U3M-74-AOE"/>
+                            <constraint firstItem="Bli-oA-xuH" firstAttribute="top" secondItem="GBj-4O-Whc" secondAttribute="top" constant="10" id="ehN-4k-DHO"/>
                             <constraint firstItem="4Dn-4z-zMi" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" id="fB1-P7-xPH"/>
                             <constraint firstItem="rqj-bp-5aC" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" id="j8i-SW-Trc"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="E6c-py-dvH" secondAttribute="trailing" id="lHd-lf-g1u"/>
+                            <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="Bli-oA-xuH" secondAttribute="trailing" constant="10" id="ljr-Wy-ZEw"/>
                             <constraint firstItem="W5w-99-VGP" firstAttribute="trailing" secondItem="GBj-4O-Whc" secondAttribute="trailing" id="tDC-rl-NsG"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="4Dn-4z-zMi" secondAttribute="trailing" id="wHy-4a-KbZ"/>
                         </constraints>
@@ -597,6 +603,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="HelpIcon" width="24" height="24"/>
         <image name="buble" width="313" height="68"/>
         <image name="chat" width="50" height="50"/>
         <image name="eraser" width="22" height="22"/>
