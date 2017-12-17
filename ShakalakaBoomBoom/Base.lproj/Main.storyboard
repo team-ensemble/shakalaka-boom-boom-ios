@@ -264,7 +264,50 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xT8-KX-EyX">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIq-Xs-BHe" userLabel="Walkthrough Message View">
+                                            <rect key="frame" x="16" y="473" width="343" height="114"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Walkthrough Message Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NgH-1X-6QD" userLabel="Title">
+                                                    <rect key="frame" x="8" y="8" width="327" height="26.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Walkthrough message which can extend upto two lines" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ck-cN-LtW" userLabel="Info">
+                                                    <rect key="frame" x="8" y="42.5" width="327" height="41"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next instruction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRx-aT-w3r" userLabel="Next Instruction">
+                                                    <rect key="frame" x="8" y="91.5" width="327" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="7ck-cN-LtW" firstAttribute="leading" secondItem="QIq-Xs-BHe" secondAttribute="leading" constant="8" id="3on-pq-1A4"/>
+                                                <constraint firstItem="kRx-aT-w3r" firstAttribute="leading" secondItem="QIq-Xs-BHe" secondAttribute="leading" constant="8" id="SzP-kV-lVn"/>
+                                                <constraint firstItem="NgH-1X-6QD" firstAttribute="top" secondItem="QIq-Xs-BHe" secondAttribute="top" constant="8" id="Vea-YZ-0o5"/>
+                                                <constraint firstAttribute="trailing" secondItem="7ck-cN-LtW" secondAttribute="trailing" constant="8" id="cfr-7u-KHd"/>
+                                                <constraint firstAttribute="height" constant="114" id="dZq-f7-Mtc"/>
+                                                <constraint firstItem="NgH-1X-6QD" firstAttribute="leading" secondItem="QIq-Xs-BHe" secondAttribute="leading" constant="8" id="gEN-Pb-wKO"/>
+                                                <constraint firstItem="7ck-cN-LtW" firstAttribute="top" secondItem="NgH-1X-6QD" secondAttribute="bottom" constant="8" id="imr-r7-zNI"/>
+                                                <constraint firstItem="kRx-aT-w3r" firstAttribute="top" secondItem="7ck-cN-LtW" secondAttribute="bottom" constant="8" id="oly-J5-fNV"/>
+                                                <constraint firstAttribute="trailing" secondItem="kRx-aT-w3r" secondAttribute="trailing" constant="8" id="shZ-U6-wRo"/>
+                                                <constraint firstAttribute="trailing" secondItem="NgH-1X-6QD" secondAttribute="trailing" constant="8" id="zql-L2-bBK"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
                                     <gestureRecognizers/>
+                                    <constraints>
+                                        <constraint firstItem="QIq-Xs-BHe" firstAttribute="leading" secondItem="xT8-KX-EyX" secondAttribute="leading" constant="16" id="Du4-Ke-tXg"/>
+                                        <constraint firstAttribute="bottom" secondItem="QIq-Xs-BHe" secondAttribute="bottom" constant="60" id="Tad-OI-eB0"/>
+                                        <constraint firstAttribute="trailing" secondItem="QIq-Xs-BHe" secondAttribute="trailing" constant="16" id="kFi-mj-OAe"/>
+                                    </constraints>
                                     <connections>
                                         <outletCollection property="gestureRecognizers" destination="dSQ-pO-n6c" appends="YES" id="gMh-dO-1sd"/>
                                     </connections>
