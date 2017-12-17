@@ -264,6 +264,10 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="xT8-KX-EyX">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <gestureRecognizers/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="dSQ-pO-n6c" appends="YES" id="gMh-dO-1sd"/>
+                                    </connections>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
@@ -321,6 +325,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="dSQ-pO-n6c">
+                    <connections>
+                        <action selector="tapGestureRecognized:" destination="BV1-FR-VrT" id="JzF-8K-5hP"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="56.799999999999997" y="98.50074962518741"/>
         </scene>

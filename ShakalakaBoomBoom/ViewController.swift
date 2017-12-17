@@ -548,6 +548,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         walkthroughVisualEffectView.isHidden = !walkthroughVisualEffectView.isHidden
     }
     
+    @IBAction func tapGestureRecognized(_ sender: UITapGestureRecognizer) {
+        print("tapGestureRecognized")
+    }
+    
     //MARK: - Add image to Library
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
