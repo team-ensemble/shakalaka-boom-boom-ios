@@ -27,6 +27,15 @@ enum StatusType: String {
     case failure = "error"
 }
 
+enum WalkthroughStage: Int {
+    case welcome
+    case pencil
+    case send
+    case screenshot
+    case settings
+    case end
+}
+
 class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate, UITextFieldDelegate, VirtualObjectSelectionViewControllerDelegate {
     
     @IBOutlet weak var vibranceView: TranslucentView!
@@ -42,7 +51,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     @IBOutlet weak var cancelFeedbackButton: UIButton!
     @IBOutlet weak var feedbackEntryViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var customTabBarView: UIView!
+    @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var walkthroughVisualEffectView: UIVisualEffectView!
+    @IBOutlet weak var walkthroughMessageTitleLabel: UILabel!
+    @IBOutlet weak var walkthroughMessageLabel: UILabel!
+    @IBOutlet weak var walkthroughNextInstructionLabel: UILabel!
     
     var image: UIImage!
     var overViewType: AppStatus = .arview
@@ -50,6 +63,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     var status: StatusType = .failure
     var err: String!
     let spinner = UIActivityIndicatorView()
+    var walkthroughTapCounter = 0
+    var isWalkthroughInProgress = false
     
     // MARK: - Main Setup & View Controller methods
     
@@ -539,17 +554,72 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         }
     }
     
-    @IBAction func helpButtonTouched(_ sender: UIButton) {
-        if sender.image(for: .normal) == #imageLiteral(resourceName: "HelpIcon") {
-            sender.setImage(#imageLiteral(resourceName: "shape"), for: .normal)
+    func updateHelpButtonIcon() {
+        if isWalkthroughInProgress {
+            helpButton.setImage(#imageLiteral(resourceName: "shape"), for: .normal)
         } else {
-            sender.setImage(#imageLiteral(resourceName: "HelpIcon"), for: .normal)
+            helpButton.setImage(#imageLiteral(resourceName: "HelpIcon"), for: .normal)
         }
-        walkthroughVisualEffectView.isHidden = !walkthroughVisualEffectView.isHidden
+    }
+    
+    func updateWalkthroughMessage(walkthroughStage: WalkthroughStage) {
+        switch walkthroughStage {
+        case .welcome:
+            walkthroughMessageTitleLabel.text = "Welcome"
+            walkthroughMessageLabel.text = "Enjoy a magical experience brought by combining the best powers of AI & AR."
+            walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+        case .pencil:
+            walkthroughMessageTitleLabel.text = ""
+            walkthroughMessageLabel.text = "Use the canvas to draw any supported object."
+            walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+        case .send:
+            walkthroughMessageTitleLabel.text = ""
+            walkthroughMessageLabel.text = "Once you have finished drawing, click Send & allow AI to present that object in AR."
+            walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+        case .screenshot:
+            walkthroughMessageTitleLabel.text = ""
+            walkthroughMessageLabel.text = "Use the screenshot feature to capture your favourite moments."
+            walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+        case .settings:
+            walkthroughMessageTitleLabel.text = ""
+            walkthroughMessageLabel.text = "Use settings to tweak the various features."
+            walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+        case .end:
+            walkthroughMessageTitleLabel.text = "End"
+            walkthroughMessageLabel.text = "That's it. Go and enjoy."
+            walkthroughNextInstructionLabel.text = "→ Tap to end the tutorial"
+        }
+    }
+    
+    func startWalkthrough() {
+        isWalkthroughInProgress = true
+        walkthroughVisualEffectView.isHidden = false
+        updateHelpButtonIcon()
+        updateWalkthroughMessage(walkthroughStage: .welcome)
+    }
+    
+    func endWalkthrough() {
+        isWalkthroughInProgress = false
+        walkthroughVisualEffectView.isHidden = true
+        updateHelpButtonIcon()
+        walkthroughTapCounter = 0
+    }
+    
+    @IBAction func helpButtonTouched(_ sender: UIButton) {
+        if isWalkthroughInProgress {
+            endWalkthrough()
+        } else {
+            startWalkthrough()
+        }
     }
     
     @IBAction func tapGestureRecognized(_ sender: UITapGestureRecognizer) {
-        print("tapGestureRecognized")
+        walkthroughTapCounter += 1
+        guard let walkthroughStage = WalkthroughStage(rawValue: walkthroughTapCounter) else {
+            endWalkthrough()
+            return
+        }
+        updateWalkthroughMessage(walkthroughStage: walkthroughStage)
     }
     
     //MARK: - Add image to Library

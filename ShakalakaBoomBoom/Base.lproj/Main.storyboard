@@ -356,6 +356,7 @@
                         <outlet property="feedbackEntryViewBottomConstraint" destination="kBr-pG-TNp" id="fLc-Zc-yuY"/>
                         <outlet property="feedbackImageView" destination="Lj2-Fc-QHN" id="687-hU-GiJ"/>
                         <outlet property="feedbackTextField" destination="ane-HH-29t" id="A2z-eL-QYW"/>
+                        <outlet property="helpButton" destination="Bli-oA-xuH" id="Zyh-eO-19O"/>
                         <outlet property="resultView" destination="chV-rZ-OhR" id="HSc-Tw-67G"/>
                         <outlet property="resultViewBottomconstraint" destination="wEC-DV-HLr" id="4jj-Ns-aJP"/>
                         <outlet property="sceneView" destination="E6c-py-dvH" id="Gr4-Uw-Z4A"/>
@@ -364,6 +365,9 @@
                         <outlet property="settingsButton" destination="vtD-AB-2dh" id="4fL-po-2bn"/>
                         <outlet property="speechField" destination="0Ym-0x-KKy" id="D7w-oh-4ub"/>
                         <outlet property="vibranceView" destination="W5w-99-VGP" id="R9f-bB-6At"/>
+                        <outlet property="walkthroughMessageLabel" destination="7ck-cN-LtW" id="jZb-dK-aBL"/>
+                        <outlet property="walkthroughMessageTitleLabel" destination="NgH-1X-6QD" id="d9p-hw-Fv8"/>
+                        <outlet property="walkthroughNextInstructionLabel" destination="kRx-aT-w3r" id="MN4-av-EE5"/>
                         <outlet property="walkthroughVisualEffectView" destination="6cM-fl-5qu" id="EPf-t2-V9l"/>
                     </connections>
                 </viewController>
