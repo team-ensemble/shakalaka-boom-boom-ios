@@ -42,6 +42,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
     @IBOutlet weak var canvasView: UIView!
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var drawingCanvas: DrawView!
+    @IBOutlet weak var drawButton: UIButton!
+    @IBOutlet weak var checkButton: UIButton!
     @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var speechField: UILabel!
     @IBOutlet weak var resultViewBottomconstraint: NSLayoutConstraint!
@@ -562,32 +564,74 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         }
     }
     
+    func updateWalkthroughHole(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) {
+        let maskView = UIView(frame: walkthroughVisualEffectView.bounds)
+        maskView.clipsToBounds = true
+        maskView.backgroundColor = UIColor.clear
+        
+        let outerbezierPath = UIBezierPath.init(roundedRect: walkthroughVisualEffectView.bounds, cornerRadius: 0)
+        let rect = CGRect(x: x, y: y, width: width, height: height)
+        let innerCirclepath = UIBezierPath.init(roundedRect:rect, cornerRadius:rect.height * 0.5)
+        outerbezierPath.append(innerCirclepath)
+        outerbezierPath.usesEvenOddFillRule = true
+        
+        let fillLayer = CAShapeLayer()
+        fillLayer.fillRule = kCAFillRuleEvenOdd
+        fillLayer.fillColor = UIColor.green.cgColor
+        fillLayer.path = outerbezierPath.cgPath
+        maskView.layer.addSublayer(fillLayer)
+        
+        walkthroughVisualEffectView.mask = maskView;
+    }
+    
+    func hideWalkthroughHole() {
+        updateWalkthroughHole(x: 0, y: 0, width: 0, height: 0)
+    }
+    
     func updateWalkthroughMessage(walkthroughStage: WalkthroughStage) {
         switch walkthroughStage {
         case .welcome:
             walkthroughMessageTitleLabel.text = "Welcome"
             walkthroughMessageLabel.text = "Enjoy a magical experience brought by combining the best powers of AI & AR."
             walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+            hideWalkthroughHole()
         case .pencil:
             walkthroughMessageTitleLabel.text = ""
             walkthroughMessageLabel.text = "Use the canvas to draw any supported object."
             walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+            let x = customTabBarView.frame.origin.x + drawButton.frame.origin.x
+            let y = customTabBarView.frame.origin.y + drawButton.frame.origin.y
+            updateWalkthroughHole(x: x, y: y, width: drawButton.frame.width, height: drawButton.frame.height)
         case .send:
             walkthroughMessageTitleLabel.text = ""
             walkthroughMessageLabel.text = "Once you have finished drawing, click Send & allow AI to present that object in AR."
             walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+            overViewType = .canvas
+            setupBaseView()
+            let x = canvasView.frame.origin.x + drawingCanvas.frame.origin.x + checkButton.frame.origin.x
+            let y = canvasView.frame.origin.x + drawingCanvas.frame.origin.x + checkButton.frame.origin.y
+            updateWalkthroughHole(x: x, y: y, width: checkButton.frame.width, height: checkButton.frame.height)
         case .screenshot:
             walkthroughMessageTitleLabel.text = ""
             walkthroughMessageLabel.text = "Use the screenshot feature to capture your favourite moments."
             walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+            overViewType = .arview
+            setupBaseView()
+            let x = customTabBarView.frame.origin.x + screenshotButton.frame.origin.x
+            let y = customTabBarView.frame.origin.y + screenshotButton.frame.origin.y
+            updateWalkthroughHole(x: x, y: y, width: screenshotButton.frame.width, height: screenshotButton.frame.height)
         case .settings:
             walkthroughMessageTitleLabel.text = ""
             walkthroughMessageLabel.text = "Use settings to tweak the various features."
             walkthroughNextInstructionLabel.text = "→ Tap to proceed"
+            let x = customTabBarView.frame.origin.x + settingsButton.frame.origin.x
+            let y = customTabBarView.frame.origin.y + settingsButton.frame.origin.y
+            updateWalkthroughHole(x: x, y: y, width: settingsButton.frame.width, height: settingsButton.frame.height)
         case .end:
             walkthroughMessageTitleLabel.text = "End"
             walkthroughMessageLabel.text = "That's it. Go and enjoy."
             walkthroughNextInstructionLabel.text = "→ Tap to end the tutorial"
+            hideWalkthroughHole()
         }
     }
     
@@ -603,6 +647,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
         walkthroughVisualEffectView.isHidden = true
         updateHelpButtonIcon()
         walkthroughTapCounter = 0
+        overViewType = .arview
+        setupBaseView()
     }
     
     @IBAction func helpButtonTouched(_ sender: UIButton) {
