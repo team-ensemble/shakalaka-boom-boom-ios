@@ -314,8 +314,12 @@
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bli-oA-xuH" userLabel="Help Button">
-                                <rect key="frame" x="341" y="30" width="24" height="24"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bli-oA-xuH" userLabel="Help Button">
+                                <rect key="frame" x="321" y="30" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="EBe-2u-q8T"/>
+                                    <constraint firstAttribute="width" constant="44" id="qKP-oC-uLR"/>
+                                </constraints>
                                 <state key="normal" image="HelpIcon"/>
                                 <connections>
                                     <action selector="helpButtonTouched:" destination="BV1-FR-VrT" eventType="touchUpInside" id="4m8-do-UI0"/>
