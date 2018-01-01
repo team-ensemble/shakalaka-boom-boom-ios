@@ -609,7 +609,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
             overViewType = .canvas
             setupBaseView()
             let x = canvasView.frame.origin.x + drawingCanvas.frame.origin.x + checkButton.frame.origin.x
-            let y = canvasView.frame.origin.x + drawingCanvas.frame.origin.x + checkButton.frame.origin.y
+            let yOffset: CGFloat = 10
+            let y = canvasView.frame.origin.x + drawingCanvas.frame.origin.x + checkButton.frame.origin.y + yOffset
             updateWalkthroughHole(x: x, y: y, width: checkButton.frame.width, height: checkButton.frame.height)
         case .screenshot:
             walkthroughMessageTitleLabel.text = ""
