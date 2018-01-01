@@ -100,11 +100,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentation
                 self.clearCanvas()
                 self.drawingCanvas.isHidden = false
                 self.resultView.isHidden = true
+                if !self.isWalkthroughInProgress {
+                    self.helpButton.isHidden = true
+                }
             case .arview:
                 self.canvasView.isUserInteractionEnabled = false
                 self.canvasView.isHidden = true
                 self.vibranceView.isHidden = true
                 self.drawingCanvas.isHidden = true
+                self.helpButton.isHidden = false
                 self.clearCanvas()
             }
         }
